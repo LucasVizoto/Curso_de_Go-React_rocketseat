@@ -1,0 +1,16 @@
+usar a ferramenta tern para criar as Migration do banco
+
+- go install github.com/jackc/tern/v2@latest
+
+depois inicializar o tern
+
+- tern init ./internal/store/pgstore/migrations
+
+para usar as migrations 
+
+- tern new --migrations ./internal/store/pgstore/migrations create rooms_table
+- tern new --migrations ./internal/store/pgstore/migrations create messages_table
+
+- sqlc generate -f ./internal/store/pgstore/sqlc.yaml
+
+- go mod tidy faz a atualização dos pacotes
