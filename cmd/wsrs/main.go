@@ -1,3 +1,5 @@
+package main
+
 import (
 	"context"
 	"errors"
@@ -28,20 +30,21 @@ func main() {
 		os.Getenv("WSRS_DATABASE_PORT"),
 		os.Getenv("WSRS_DATABASE_NAME"),
 	))
-	if err!= nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 
 	defer pool.Close()
 
-	if err := pool.Ping(ctx); err!=nil{
+	if err := pool.Ping(ctx); err != nil {
 		panic(err)
 	}
+
 	handler := api.NewHandler(pgstore.New(pool))
 
-	go func (){
-		if err:= http.ListenAndServe(":8080", handler); err!=nil{
-			if !errors.Is(err, http.ErrServerClosed){
+	go func() {
+		if err := http.ListenAndServe(":8080", handler); err != nil {
+			if !errors.Is(err, http.ErrServerClosed) {
 				panic(err)
 			}
 		}
